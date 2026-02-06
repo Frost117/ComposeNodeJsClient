@@ -1,5 +1,5 @@
 import { Show, ComposeUpsertEntry, ComposePayload } from '../schema/types.js';
-import { fetchedData } from './fetch.js';
+import { fetchedData } from './fetchShows.js';
 import { getAccessToken } from './auth.js';
 
 const IMPORT_ENDPOINT_URL = process.env.IMPORT_ENDPOINT_URL;
@@ -20,7 +20,7 @@ function transformToComposePayload(shows: Show[]): ComposePayload<Show> {
   }));
 }
 
-export async function importData(): Promise<void> {
+export async function sendToCompose(): Promise<void> {
   if (!fetchedData || fetchedData.length === 0) {
     console.error('No data to import. Please fetch data first.');
     return;

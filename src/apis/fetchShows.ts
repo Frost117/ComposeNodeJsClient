@@ -5,7 +5,7 @@ const FETCH_ENDPOINT_URL = process.env.FETCH_ENDPOINT_URL;
 
 export let fetchedData: Show[] | null = null;
 
-export async function fetchData(): Promise<Show[] | null> {
+export async function fetchShows(): Promise<Show[] | null> {
   const pages = await askPageCount();
   // TODO: Implement multi-page fetching using ?page=N parameter
 

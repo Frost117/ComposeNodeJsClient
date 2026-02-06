@@ -3,10 +3,13 @@ import {
   MenuAction,
   showMainMenu,
   confirmContinue,
+  askCollectionAlias,
+  askCollectionDescription,
 } from './prompts.js';
-import { fetchData } from './apis/fetch.js';
-import { importData } from './apis/import.js';
-import { fetchAndImport } from './apis/fetchAndImport.js';
+import { fetchShows } from './apis/fetchShows.js';
+import { sendToCompose } from './apis/sendToCompose.js';
+import { fetchAndSend } from './apis/fetchAndSend.js';
+import { createCollection } from './apis/createCollection.js';
 
 const FETCH_ENDPOINT_URL = process.env.FETCH_ENDPOINT_URL;
 const IMPORT_ENDPOINT_URL = process.env.IMPORT_ENDPOINT_URL;
@@ -15,6 +18,12 @@ const COMPOSE_ENVIRONMENT_ALIAS = process.env.COMPOSE_ENVIRONMENT_ALIAS;
 const COMPOSE_COLLECTION_ALIAS = process.env.COMPOSE_COLLECTION_ALIAS;
 const COMPOSE_CLIENT_ID = process.env.COMPOSE_CLIENT_ID;
 const COMPOSE_CLIENT_SECRET = process.env.COMPOSE_CLIENT_SECRET;
+
+async function handleCreateCollection(): Promise<void> {
+  const alias = await askCollectionAlias();
+  const description = await askCollectionDescription();
+  await createCollection(alias, description || undefined);
+}
 
 async function main(): Promise<void> {
   if (!FETCH_ENDPOINT_URL || !IMPORT_ENDPOINT_URL || !COMPOSE_PROJECT_ALIAS || !COMPOSE_ENVIRONMENT_ALIAS || !COMPOSE_COLLECTION_ALIAS || !COMPOSE_CLIENT_ID || !COMPOSE_CLIENT_SECRET) {
@@ -30,13 +39,16 @@ async function main(): Promise<void> {
 
     switch (action) {
       case 'fetch':
-        await fetchData();
+        await fetchShows();
         break;
-      case 'import':
-        await importData();
+      case 'send':
+        await sendToCompose();
         break;
-      case 'fetch_and_import':
-        await fetchAndImport();
+      case 'fetch_and_send':
+        await fetchAndSend();
+        break;
+      case 'create_collection':
+        await handleCreateCollection();
         break;
       case 'exit':
         running = false;
