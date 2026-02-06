@@ -12,7 +12,7 @@ import { fetchAndSend } from './apis/fetchAndSend.js';
 import { createCollection } from './apis/compose/collection/create.js';
 
 const FETCH_ENDPOINT_URL = process.env.FETCH_ENDPOINT_URL;
-const IMPORT_ENDPOINT_URL = process.env.IMPORT_ENDPOINT_URL;
+const COMPOSE_INGESTION_URL = process.env.COMPOSE_INGESTION_URL;
 const COMPOSE_PROJECT_ALIAS = process.env.COMPOSE_PROJECT_ALIAS;
 const COMPOSE_ENVIRONMENT_ALIAS = process.env.COMPOSE_ENVIRONMENT_ALIAS;
 const COMPOSE_COLLECTION_ALIAS = process.env.COMPOSE_COLLECTION_ALIAS;
@@ -26,7 +26,7 @@ async function handleCreateCollection(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  if (!FETCH_ENDPOINT_URL || !IMPORT_ENDPOINT_URL || !COMPOSE_PROJECT_ALIAS || !COMPOSE_ENVIRONMENT_ALIAS || !COMPOSE_COLLECTION_ALIAS || !COMPOSE_CLIENT_ID || !COMPOSE_CLIENT_SECRET) {
+  if (!FETCH_ENDPOINT_URL || !COMPOSE_INGESTION_URL || !COMPOSE_PROJECT_ALIAS || !COMPOSE_ENVIRONMENT_ALIAS || !COMPOSE_COLLECTION_ALIAS || !COMPOSE_CLIENT_ID || !COMPOSE_CLIENT_SECRET) {
     console.error('Missing required environment variables. Check your .env file.');
     process.exit(1);
   }

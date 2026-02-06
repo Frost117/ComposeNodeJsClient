@@ -1,4 +1,4 @@
-const AUTH_URL = 'https://management.umbracocompose.com/v1/auth/token';
+const AUTH_URL = `${process.env.COMPOSE_MANAGEMENT_URL}/v1/auth/token`;
 const COMPOSE_CLIENT_ID = process.env.COMPOSE_CLIENT_ID;
 const COMPOSE_CLIENT_SECRET = process.env.COMPOSE_CLIENT_SECRET;
 

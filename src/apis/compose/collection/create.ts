@@ -1,6 +1,6 @@
 import { getAccessToken } from '../auth.js';
 
-const MANAGEMENT_URL = 'https://management.umbracocompose.com';
+const MANAGEMENT_URL = process.env.COMPOSE_MANAGEMENT_URL;
 const COMPOSE_PROJECT_ALIAS = process.env.COMPOSE_PROJECT_ALIAS;
 const COMPOSE_ENVIRONMENT_ALIAS = process.env.COMPOSE_ENVIRONMENT_ALIAS;
 

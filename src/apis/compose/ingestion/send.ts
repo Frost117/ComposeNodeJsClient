@@ -2,13 +2,13 @@ import { Show, ComposeUpsertEntry, ComposePayload } from '../../../schema/types.
 import { fetchedData } from '../../tvmaze/fetchShows.js';
 import { getAccessToken } from '../auth.js';
 
-const IMPORT_ENDPOINT_URL = process.env.IMPORT_ENDPOINT_URL;
+const COMPOSE_INGESTION_URL = process.env.COMPOSE_INGESTION_URL;
 const COMPOSE_PROJECT_ALIAS = process.env.COMPOSE_PROJECT_ALIAS;
 const COMPOSE_ENVIRONMENT_ALIAS = process.env.COMPOSE_ENVIRONMENT_ALIAS;
 const COMPOSE_COLLECTION_ALIAS = process.env.COMPOSE_COLLECTION_ALIAS;
 
 function buildImportUrl(): string {
-  return `${IMPORT_ENDPOINT_URL}/v1/${COMPOSE_PROJECT_ALIAS}/${COMPOSE_ENVIRONMENT_ALIAS}/${COMPOSE_COLLECTION_ALIAS}`;
+  return `${COMPOSE_INGESTION_URL}/v1/${COMPOSE_PROJECT_ALIAS}/${COMPOSE_ENVIRONMENT_ALIAS}/${COMPOSE_COLLECTION_ALIAS}`;
 }
 
 function transformToComposePayload(shows: Show[]): ComposePayload<Show> {
@@ -26,7 +26,7 @@ export async function sendToCompose(): Promise<void> {
     return;
   }
 
-  if (!IMPORT_ENDPOINT_URL || !COMPOSE_PROJECT_ALIAS || !COMPOSE_ENVIRONMENT_ALIAS || !COMPOSE_COLLECTION_ALIAS) {
+  if (!COMPOSE_INGESTION_URL || !COMPOSE_PROJECT_ALIAS || !COMPOSE_ENVIRONMENT_ALIAS || !COMPOSE_COLLECTION_ALIAS) {
     console.error('Missing required Compose environment variables');
     return;
   }

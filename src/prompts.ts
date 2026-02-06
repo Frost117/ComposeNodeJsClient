@@ -18,7 +18,7 @@ export async function showMainMenu(): Promise<MenuAction> {
 
 export async function askPageCount(): Promise<number> {
   const pages = await number({
-    message: 'How many pages to fetch? (240 shows per page). Default is 1',
+    message: `How many pages to fetch? (240 shows per page). Default is 1`,
     default: 1,
     min: 1,
   });
