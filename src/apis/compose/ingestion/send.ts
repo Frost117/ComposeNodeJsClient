@@ -1,6 +1,6 @@
-import { Show, ComposeUpsertEntry, ComposePayload } from '../schema/types.js';
-import { fetchedData } from './fetchShows.js';
-import { getAccessToken } from './auth.js';
+import { Show, ComposeUpsertEntry, ComposePayload } from '../../../schema/types.js';
+import { fetchedData } from '../../tvmaze/fetchShows.js';
+import { getAccessToken } from '../auth.js';
 
 const IMPORT_ENDPOINT_URL = process.env.IMPORT_ENDPOINT_URL;
 const COMPOSE_PROJECT_ALIAS = process.env.COMPOSE_PROJECT_ALIAS;

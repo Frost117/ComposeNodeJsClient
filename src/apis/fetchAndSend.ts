@@ -1,6 +1,6 @@
 import { askImportDelay } from '../prompts.js';
-import { fetchShows } from './fetchShows.js';
-import { sendToCompose } from './sendToCompose.js';
+import { fetchShows } from './tvmaze/fetchShows.js';
+import { sendToCompose } from './compose/ingestion/send.js';
 
 export async function fetchAndSend(): Promise<void> {
   const delay = await askImportDelay();

@@ -6,10 +6,10 @@ import {
   askCollectionAlias,
   askCollectionDescription,
 } from './prompts.js';
-import { fetchShows } from './apis/fetchShows.js';
-import { sendToCompose } from './apis/sendToCompose.js';
+import { fetchShows } from './apis/tvmaze/fetchShows.js';
+import { sendToCompose } from './apis/compose/ingestion/send.js';
 import { fetchAndSend } from './apis/fetchAndSend.js';
-import { createCollection } from './apis/createCollection.js';
+import { createCollection } from './apis/compose/collection/create.js';
 
 const FETCH_ENDPOINT_URL = process.env.FETCH_ENDPOINT_URL;
 const IMPORT_ENDPOINT_URL = process.env.IMPORT_ENDPOINT_URL;

@@ -1,5 +1,5 @@
-import { Show } from '../schema/types.js';
-import { askPageCount } from '../prompts.js';
+import { Show } from '../../schema/types.js';
+import { askPageCount } from '../../prompts.js';
 
 const FETCH_ENDPOINT_URL = process.env.FETCH_ENDPOINT_URL;
 
