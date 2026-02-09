@@ -22,11 +22,6 @@ export async function sendToCompose(): Promise<void> {
     return;
   }
 
-  if (!config.COMPOSE_INGESTION_URL || !config.COMPOSE_PROJECT_ALIAS || !config.COMPOSE_ENVIRONMENT_ALIAS || !config.COMPOSE_COLLECTION_ALIAS) {
-    console.error('Missing required Compose environment variables');
-    return;
-  }
-
   const accessToken = await getAccessToken();
   if (!accessToken) {
     console.error('Failed to obtain access token');

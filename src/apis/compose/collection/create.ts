@@ -11,10 +11,6 @@ function buildCollectionsUrl(): string {
 }
 
 export async function createCollection(alias: string, description?: string): Promise<boolean> {
-  if (!config.COMPOSE_PROJECT_ALIAS || !config.COMPOSE_ENVIRONMENT_ALIAS) {
-    console.error('Missing required Compose environment variables');
-    return false;
-  }
 
   const accessToken = await getAccessToken();
   if (!accessToken) {
