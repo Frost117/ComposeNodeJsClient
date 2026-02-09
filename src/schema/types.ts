@@ -97,6 +97,16 @@ export interface ComposeDeleteEntry {
   action: 'delete';
 }
 
+export interface CreateCollectionPayload {
+  collectionAlias: string;
+  description?: string;
+}
+
+export interface CreateEnvironmentPayload {
+  environmentAlias: string;
+  description?: string;
+}
+
 export type ComposeEntry<T = Record<string, unknown>> = ComposeUpsertEntry<T> | ComposeDeleteEntry;
 
 export type ComposePayload<T = Record<string, unknown>> = ComposeEntry<T>[];
