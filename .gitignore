@@ -77,3 +77,4 @@ web_modules/
 .dynamodb/
 .firebase/
 .tern-port
+package-lock.json
