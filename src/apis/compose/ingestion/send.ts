@@ -1,11 +1,7 @@
 import { Show, ComposeUpsertEntry, ComposePayload } from '../../../schema/types.js';
 import { fetchedData } from '../../tvmaze/fetchShows.js';
 import { getAccessToken } from '../auth.js';
-import config from '../../../config.js';
-
-function buildImportUrl(): string {
-  return `${config.COMPOSE_INGESTION_URL}/v1/${config.COMPOSE_PROJECT_ALIAS}/${config.COMPOSE_ENVIRONMENT_ALIAS}/${config.COMPOSE_COLLECTION_ALIAS}`;
-}
+import { buildImportUrl } from '../helpers/urls.js';
 
 function transformToComposePayload(shows: Show[]): ComposePayload<Show> {
   return shows.map((show): ComposeUpsertEntry<Show> => ({
