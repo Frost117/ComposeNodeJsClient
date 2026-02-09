@@ -11,3 +11,7 @@ export function buildCollectionsUrl(): string {
 export function buildEnvironmentsUrl(): string {
   return `${config.COMPOSE_MANAGEMENT_URL}/v1/projects/${config.COMPOSE_PROJECT_ALIAS}/environments`;
 }
+
+export function buildImportUrl(): string {
+  return `${config.COMPOSE_INGESTION_URL}/v1/${config.COMPOSE_PROJECT_ALIAS}/${config.COMPOSE_ENVIRONMENT_ALIAS}/${config.COMPOSE_COLLECTION_ALIAS}`;
+}
