@@ -1,5 +1,6 @@
 import { Show } from '../../schema/types.js';
 import { askPageCount } from '../../prompts.js';
+import config from '../../config.js';
 
 export let fetchedData: Show[] | null = null;
 
@@ -8,7 +9,7 @@ export async function fetchShows(): Promise<Show[] | null> {
   // TODO: Implement multi-page fetching using ?page=N parameter
 
   try {
-    const response = await fetch(`${process.env.FETCH_ENDPOINT_URL!}`, {
+    const response = await fetch(`${config.FETCH_ENDPOINT_URL!}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
