@@ -18,11 +18,6 @@ async function handleCreateCollection(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  if (!config.FETCH_ENDPOINT_URL || !config.COMPOSE_INGESTION_URL || !config.COMPOSE_PROJECT_ALIAS || !config.COMPOSE_ENVIRONMENT_ALIAS || !config.COMPOSE_COLLECTION_ALIAS || !config.COMPOSE_CLIENT_ID || !config.COMPOSE_CLIENT_SECRET) {
-    console.error('Missing required environment variables. Check your .env file.');
-    process.exit(1);
-  }
-
   console.log('Data Import Tool\n');
 
   let running = true;
