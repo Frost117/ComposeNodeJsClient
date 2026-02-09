@@ -1,14 +1,6 @@
 import { getAccessToken } from '../auth.js';
-import config from '../../../config.js';
-
-interface CreateCollectionPayload {
-  collectionAlias: string;
-  description?: string;
-}
-
-function buildCollectionsUrl(): string {
-  return `${config.COMPOSE_MANAGEMENT_URL}/v1/projects/${config.COMPOSE_PROJECT_ALIAS}/environments/${config.COMPOSE_ENVIRONMENT_ALIAS}/collections`;
-}
+import { buildCollectionsUrl } from '../helpers/urls.js';
+import { CreateCollectionPayload } from '../../../schema/types.js';
 
 export async function createCollection(alias: string, description?: string): Promise<boolean> {
 
