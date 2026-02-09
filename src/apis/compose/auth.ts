@@ -12,11 +12,6 @@ export async function getAccessToken(): Promise<string | null> {
     return cachedToken;
   }
 
-  if (!config.COMPOSE_CLIENT_ID || !config.COMPOSE_CLIENT_SECRET) {
-    console.error('Missing COMPOSE_CLIENT_ID or COMPOSE_CLIENT_SECRET');
-    return null;
-  }
-
   try {
     const response = await fetch(AUTH_URL, {
       method: 'POST',
