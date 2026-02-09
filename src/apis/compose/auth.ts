@@ -1,12 +1,7 @@
-const AUTH_URL = `${process.env.COMPOSE_MANAGEMENT_URL}/v1/auth/token`;
-const COMPOSE_CLIENT_ID = process.env.COMPOSE_CLIENT_ID;
-const COMPOSE_CLIENT_SECRET = process.env.COMPOSE_CLIENT_SECRET;
+import config from "../../config.js";
+import { TokenResponse } from "../../schema/types.js";
 
-interface TokenResponse {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-}
+const AUTH_URL = `${config.COMPOSE_MANAGEMENT_URL}/v1/auth/token`;
 
 let cachedToken: string | null = null;
 let tokenExpiry: number | null = null;
@@ -17,7 +12,7 @@ export async function getAccessToken(): Promise<string | null> {
     return cachedToken;
   }
 
-  if (!COMPOSE_CLIENT_ID || !COMPOSE_CLIENT_SECRET) {
+  if (!config.COMPOSE_CLIENT_ID || !config.COMPOSE_CLIENT_SECRET) {
     console.error('Missing COMPOSE_CLIENT_ID or COMPOSE_CLIENT_SECRET');
     return null;
   }
@@ -30,8 +25,8 @@ export async function getAccessToken(): Promise<string | null> {
       },
       body: new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: COMPOSE_CLIENT_ID,
-        client_secret: COMPOSE_CLIENT_SECRET,
+        client_id: config.COMPOSE_CLIENT_ID,
+        client_secret: config.COMPOSE_CLIENT_SECRET,
       }),
     });
 

@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import config from './config.js';
 import {
   MenuAction,
   showMainMenu,
@@ -11,14 +11,6 @@ import { sendToCompose } from './apis/compose/ingestion/send.js';
 import { fetchAndSend } from './apis/fetchAndSend.js';
 import { createCollection } from './apis/compose/collection/create.js';
 
-const FETCH_ENDPOINT_URL = process.env.FETCH_ENDPOINT_URL;
-const COMPOSE_INGESTION_URL = process.env.COMPOSE_INGESTION_URL;
-const COMPOSE_PROJECT_ALIAS = process.env.COMPOSE_PROJECT_ALIAS;
-const COMPOSE_ENVIRONMENT_ALIAS = process.env.COMPOSE_ENVIRONMENT_ALIAS;
-const COMPOSE_COLLECTION_ALIAS = process.env.COMPOSE_COLLECTION_ALIAS;
-const COMPOSE_CLIENT_ID = process.env.COMPOSE_CLIENT_ID;
-const COMPOSE_CLIENT_SECRET = process.env.COMPOSE_CLIENT_SECRET;
-
 async function handleCreateCollection(): Promise<void> {
   const alias = await askCollectionAlias();
   const description = await askCollectionDescription();
@@ -26,7 +18,7 @@ async function handleCreateCollection(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  if (!FETCH_ENDPOINT_URL || !COMPOSE_INGESTION_URL || !COMPOSE_PROJECT_ALIAS || !COMPOSE_ENVIRONMENT_ALIAS || !COMPOSE_COLLECTION_ALIAS || !COMPOSE_CLIENT_ID || !COMPOSE_CLIENT_SECRET) {
+  if (!config.FETCH_ENDPOINT_URL || !config.COMPOSE_INGESTION_URL || !config.COMPOSE_PROJECT_ALIAS || !config.COMPOSE_ENVIRONMENT_ALIAS || !config.COMPOSE_COLLECTION_ALIAS || !config.COMPOSE_CLIENT_ID || !config.COMPOSE_CLIENT_SECRET) {
     console.error('Missing required environment variables. Check your .env file.');
     process.exit(1);
   }

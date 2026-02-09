@@ -1,8 +1,5 @@
 import { getAccessToken } from '../auth.js';
-
-const MANAGEMENT_URL = process.env.COMPOSE_MANAGEMENT_URL;
-const COMPOSE_PROJECT_ALIAS = process.env.COMPOSE_PROJECT_ALIAS;
-const COMPOSE_ENVIRONMENT_ALIAS = process.env.COMPOSE_ENVIRONMENT_ALIAS;
+import config from '../../../config.js';
 
 interface CreateCollectionPayload {
   collectionAlias: string;
@@ -10,11 +7,11 @@ interface CreateCollectionPayload {
 }
 
 function buildCollectionsUrl(): string {
-  return `${MANAGEMENT_URL}/v1/projects/${COMPOSE_PROJECT_ALIAS}/environments/${COMPOSE_ENVIRONMENT_ALIAS}/collections`;
+  return `${config.COMPOSE_MANAGEMENT_URL}/v1/projects/${config.COMPOSE_PROJECT_ALIAS}/environments/${config.COMPOSE_ENVIRONMENT_ALIAS}/collections`;
 }
 
 export async function createCollection(alias: string, description?: string): Promise<boolean> {
-  if (!COMPOSE_PROJECT_ALIAS || !COMPOSE_ENVIRONMENT_ALIAS) {
+  if (!config.COMPOSE_PROJECT_ALIAS || !config.COMPOSE_ENVIRONMENT_ALIAS) {
     console.error('Missing required Compose environment variables');
     return false;
   }
