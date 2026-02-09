@@ -75,6 +75,14 @@ export interface Link {
   name?: string;
 }
 
+
+// Umbraco Compose Token types
+export interface TokenResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
+
 // Umbraco Compose Ingestion API types
 export interface ComposeUpsertEntry<T = Record<string, unknown>> {
   id: string;
