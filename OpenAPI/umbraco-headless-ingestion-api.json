@@ -1,0 +1,445 @@
+{
+    "x-generator": "NSwag v14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))",
+    "openapi": "3.1.1",
+    "info": {
+        "title": "Umbraco Headless Ingestion API",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "https://ingest.germanywestcentral.umbracocompose.com"
+        }
+    ],
+    "paths": {
+        "/v1/{projectAlias}/{environmentAlias}/{collectionAlias}": {
+            "put": {
+                "description": "Ingest or Delete data into the collection, based on the action property.",
+                "operationId": "IngestEndpoint",
+                "parameters": [
+                    {
+                        "name": "projectAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "environmentAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "collectionAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "x-name": "entries",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ContentEntry"
+                                },
+                                "examples": [
+                                    [
+                                        {
+                                            "id": "04c4b6a1-1639-471d-b8a6-2b394a071646",
+                                            "type": "software",
+                                            "data": {
+                                                "name": "Umbraco Forms"
+                                            },
+                                            "action": "upsert"
+                                        },
+                                        {
+                                            "id": "176fa4c5-5ae9-457c-adf8-5826824cad63",
+                                            "type": "software",
+                                            "variant": "en-GB",
+                                            "data": {
+                                                "name": "Umbraco Deploy"
+                                            },
+                                            "action": "upsert"
+                                        },
+                                        {
+                                            "id": "456",
+                                            "action": "delete"
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKey": []
+                    }
+                ]
+            }
+        },
+        "/v1/{projectAlias}/{environmentAlias}/{collectionAlias}/{ingestionFunctionAlias}": {
+            "put": {
+                "description": "Ingests data into the collection.",
+                "operationId": "PutIngestionFunctionEndpoint",
+                "parameters": [
+                    {
+                        "name": "projectAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "environmentAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "collectionAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "ingestionFunctionAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "x-name": "data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "examples": [
+                                    [
+                                        {
+                                            "id": "53853400-d0bf-4275-9734-5232504205b6",
+                                            "contentTypeAlias": "service",
+                                            "variant": "en-GB",
+                                            "name": "Umbraco Support"
+                                        },
+                                        {
+                                            "id": "04c4b6a1-1639-471d-b8a6-2b394a071646",
+                                            "contentTypeAlias": "software",
+                                            "name": "Umbraco Forms"
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKey": []
+                    }
+                ]
+            },
+            "post": {
+                "description": "Ingests data into the collection.",
+                "operationId": "PostIngestionFunctionEndpoint",
+                "parameters": [
+                    {
+                        "name": "projectAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "environmentAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "collectionAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "ingestionFunctionAlias",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "x-name": "data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "examples": [
+                                    [
+                                        {
+                                            "id": "53853400-d0bf-4275-9734-5232504205b6",
+                                            "contentTypeAlias": "service",
+                                            "variant": "en-GB",
+                                            "name": "Umbraco Support"
+                                        },
+                                        {
+                                            "id": "04c4b6a1-1639-471d-b8a6-2b394a071646",
+                                            "contentTypeAlias": "software",
+                                            "name": "Umbraco Forms"
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProblemDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKey": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ContentEntry": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                    "id",
+                    "action"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "variant": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "data": {
+                        "nullable": true
+                    },
+                    "action": {
+                        "type": "string",
+                        "enum": [
+                            "upsert",
+                            "delete"
+                        ]
+                    }
+                }
+            },
+            "ProblemDetails": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "instance",
+                    "traceId",
+                    "errors"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "default": "https://www.rfc-editor.org/rfc/rfc7231#section-6.5.1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "default": "One or more validation errors occurred."
+                    },
+                    "status": {
+                        "type": "integer",
+                        "format": "int32",
+                        "default": 400
+                    },
+                    "instance": {
+                        "type": "string",
+                        "default": "/api/route"
+                    },
+                    "traceId": {
+                        "type": "string",
+                        "default": "0HMPNHL0JHL76:00000001"
+                    },
+                    "detail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProblemDetails_Error"
+                        }
+                    }
+                }
+            },
+            "ProblemDetails_Error": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                    "name",
+                    "reason"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "default": "Error or field name"
+                    },
+                    "reason": {
+                        "type": "string",
+                        "default": "Error reason"
+                    },
+                    "code": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "severity": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "ApiKey": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
