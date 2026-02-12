@@ -97,16 +97,35 @@ export interface ComposeDeleteEntry {
   action: 'delete';
 }
 
-export interface CreateCollectionPayload {
+export interface Collection {
   collectionAlias: string;
-  description?: string;
-}
-
-export interface CreateEnvironmentPayload {
-  environmentAlias: string;
-  description?: string;
+  description: string | null;
 }
 
 export type ComposeEntry<T = Record<string, unknown>> = ComposeUpsertEntry<T> | ComposeDeleteEntry;
 
 export type ComposePayload<T = Record<string, unknown>> = ComposeEntry<T>[];
+
+// Umbraco Compose Management API - paginated response
+export interface ComposeEdge<T> {
+  cursor: string;
+  node: T;
+}
+
+export interface PageInfo {
+  firstCursor: string | null;
+  lastCursor: string | null;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}
+
+export interface ComposePagedResponse<T> {
+  edges: ComposeEdge<T>[];
+  pageInfo: PageInfo | null;
+  totalCount: number | null;
+}
+
+export interface Environment {
+  environmentAlias: string;
+  description: string | null;
+}

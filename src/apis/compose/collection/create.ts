@@ -1,8 +1,8 @@
 import { getAccessToken } from '../auth.js';
 import { buildCollectionsUrl } from '../helpers/urls.js';
-import { CreateCollectionPayload } from '../../../schema/types.js';
+import { Collection } from '../../../schema/types.js';
 
-export async function createCollection(alias: string, description?: string): Promise<boolean> {
+export async function createCollection(collectionAlias: string, description?: string): Promise<boolean> {
 
   const accessToken = await getAccessToken();
   if (!accessToken) {
@@ -11,12 +11,12 @@ export async function createCollection(alias: string, description?: string): Pro
   }
 
   const url = buildCollectionsUrl();
-  const payload: CreateCollectionPayload = {
-    collectionAlias: alias,
-    description: description,
+  const payload: Collection = {
+    collectionAlias: collectionAlias,
+    description: description ?? null,
   };
 
-  console.log(`Creating collection "${alias}"...`);
+  console.log(`Creating collection "${collectionAlias}"...`);
   console.log(`URL: ${url}`);
 
   try {
@@ -37,7 +37,7 @@ export async function createCollection(alias: string, description?: string): Pro
     }
 
     const responseBody = await response.text();
-    console.log(`Successfully created collection "${alias}"`);
+    console.log(`Successfully created collection "${collectionAlias}"`);
     if (responseBody) {
       console.log(`Response: ${responseBody}`);
     }

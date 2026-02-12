@@ -1,7 +1,6 @@
-import config from "../../config.js";
 import { TokenResponse } from "../../schema/types.js";
-
-const AUTH_URL = `${config.COMPOSE_MANAGEMENT_URL}/v1/auth/token`;
+import { buildAuthUrl } from "./helpers/urls.js";
+import config from "../../config.js";
 
 let cachedToken: string | null = null;
 let tokenExpiry: number | null = null;
@@ -12,8 +11,11 @@ export async function getAccessToken(): Promise<string | null> {
     return cachedToken;
   }
 
+
+  const authUrl = buildAuthUrl();
+
   try {
-    const response = await fetch(AUTH_URL, {
+    const response = await fetch(authUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

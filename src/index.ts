@@ -1,4 +1,3 @@
-import config from './config.js';
 import {
   MenuAction,
   showMainMenu,
@@ -13,17 +12,18 @@ import { sendToCompose } from './apis/compose/ingestion/send.js';
 import { fetchAndSend } from './apis/fetchAndSend.js';
 import { createCollection } from './apis/compose/collection/create.js';
 import { createEnvironment } from './apis/compose/environment/create.js';
-  
+import { getEnvironments, printEnvironments } from './apis/compose/environment/get.js';
+import { createTypeSchema } from './apis/compose/type-schema/create.js';
 
 async function handleCreateCollection(): Promise<void> {
   const collectionAlias = await askCollectionAlias();
   const description = await askCollectionDescription();
-  await createCollection(collectionAlias, description || undefined);
+  await createCollection(collectionAlias, description);
 }
 async function handleCreateEnvironment(): Promise<void> {
   const environmentAlias = await askEnvironmentAlias();
   const description = await askEnvironmentDescription();
-  await createEnvironment(environmentAlias, description || undefined);
+  await createEnvironment(environmentAlias, description);
 }
 
 
@@ -49,6 +49,14 @@ async function main(): Promise<void> {
         break;
       case 'create_environment':
         await handleCreateEnvironment();
+        break;
+      case 'get_environments': {
+        const environments = await getEnvironments();
+        printEnvironments(environments);
+        break;
+      }
+      case 'create_type_schema':
+        await createTypeSchema();
         break;
       case 'exit':
         running = false;

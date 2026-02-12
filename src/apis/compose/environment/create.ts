@@ -1,6 +1,6 @@
 import { getAccessToken } from "../auth.js";
 import { buildEnvironmentsUrl } from "../helpers/urls.js";
-import { CreateEnvironmentPayload } from "../../../schema/types.js";
+import { Environment } from "../../../schema/types.js";
 
 export async function createEnvironment(alias: string, description?: string): Promise<boolean> {
 
@@ -11,9 +11,9 @@ export async function createEnvironment(alias: string, description?: string): Pr
   }
 
   const url = buildEnvironmentsUrl();
-  const payload: CreateEnvironmentPayload = {
+  const payload: Environment = {
     environmentAlias: alias,
-    description: description,
+    description: description ?? null,
   };
 
   console.log(`Creating environment "${alias}"...`);
@@ -37,8 +37,7 @@ export async function createEnvironment(alias: string, description?: string): Pr
     }
 
     const responseBody = await response.text();
-    console.log(`Successfully created environment
-    "${alias}"`);
+    console.log(`Successfully created environment "${alias}"`);
     if (responseBody) {
       console.log(`Response: ${responseBody}`);
     }

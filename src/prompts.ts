@@ -1,6 +1,7 @@
 import { select, confirm, number, input } from '@inquirer/prompts';
+import { Collection, Environment } from './schema/types.js';
 
-export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'create_environment' | 'exit';
+export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'create_environment' | 'get_environments' | 'create_type_schema' | 'exit';
 
 export async function showMainMenu(): Promise<MenuAction> {
   console.clear();
@@ -11,7 +12,9 @@ export async function showMainMenu(): Promise<MenuAction> {
       { name: 'Send to Compose', value: 'send' as const },
       { name: 'Fetch and send (with delay)', value: 'fetch_and_send' as const },
       { name: 'Create environment', value: 'create_environment' as const },
+      { name: 'Get environments', value: 'get_environments' as const },
       { name: 'Create collection', value: 'create_collection' as const },
+      { name: 'Create type schema', value: 'create_type_schema' as const },
       { name: 'Exit', value: 'exit' as const },
     ],
   });
@@ -61,6 +64,24 @@ export async function askEnvironmentDescription(): Promise<string> {
   });
 }
 
+export async function askSelectEnvironment(environments: Environment[]): Promise<string> {
+  return select({
+    message: 'Which environment?',
+    choices: environments.map(env => ({
+      name: env.description ? `${env.environmentAlias} — ${env.description}` : env.environmentAlias,
+      value: env.environmentAlias,
+    })),
+  });
+}
+
+export async function askSelectCollection(collections: Collection[]): Promise<string> {
+  return select({
+message: 'Which collection?', choices: collections.map(coll => ({ 
+  name: coll.description ? `${coll.collectionAlias} — ${coll.description}` : coll.collectionAlias, 
+  value: coll.collectionAlias, 
+    })), 
+  }); 
+}
 export async function confirmContinue(): Promise<boolean> {
   return confirm({
     message: 'Return to main menu?',
