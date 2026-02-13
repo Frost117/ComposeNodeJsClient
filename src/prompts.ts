@@ -1,7 +1,7 @@
 import { select, confirm, number, input } from '@inquirer/prompts';
 import { Collection, Environment } from './schema/types.js';
 
-export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'create_environment' | 'get_environments' | 'create_type_schema' | 'exit';
+export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'delete_collection' | 'create_environment' | 'get_environments' | 'delete_environment' | 'create_type_schema' | 'exit';
 
 export async function showMainMenu(): Promise<MenuAction> {
   console.clear();
@@ -12,8 +12,10 @@ export async function showMainMenu(): Promise<MenuAction> {
       { name: 'Send to Compose', value: 'send' as const },
       { name: 'Fetch and send (with delay)', value: 'fetch_and_send' as const },
       { name: 'Create environment', value: 'create_environment' as const },
-      { name: 'Get environments', value: 'get_environments' as const },
-      { name: 'Create collection', value: 'create_collection' as const },
+      { name: 'Get all environments', value: 'get_environments' as const },
+      { name: 'Delete an environment', value: 'delete_environment' as const },
+      { name: 'Create a collection', value: 'create_collection' as const },
+      { name: 'Delete a collection', value: 'delete_collection' as const },
       { name: 'Create type schema', value: 'create_type_schema' as const },
       { name: 'Exit', value: 'exit' as const },
     ],
@@ -86,6 +88,14 @@ export async function confirmContinue(): Promise<boolean> {
   return confirm({
     message: 'Return to main menu?',
     default: true,
+  });
+}
+
+export async function confirmDelete(resourceType: string, resourceName: string, environmentAlias?: string): Promise<boolean> {
+  const location = environmentAlias ? ` from "${environmentAlias}"` : '';
+  return confirm({
+    message: `Are you sure you want to delete ${resourceType} "${resourceName}"${location}? This cannot be undone.`,
+    default: false,
   });
 }
 

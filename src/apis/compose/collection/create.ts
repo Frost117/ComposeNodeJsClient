@@ -1,8 +1,11 @@
 import { getAccessToken } from '../auth.js';
 import { buildCollectionsUrl } from '../helpers/urls.js';
 import { Collection } from '../../../schema/types.js';
+import { askCollectionAlias, askCollectionDescription } from '../../../prompts.js';
 
-export async function createCollection(collectionAlias: string, description?: string): Promise<boolean> {
+export async function createCollection(): Promise<boolean> {
+  const collectionAlias = await askCollectionAlias();
+  const description = await askCollectionDescription();
 
   const accessToken = await getAccessToken();
   if (!accessToken) {

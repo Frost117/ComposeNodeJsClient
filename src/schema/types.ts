@@ -129,3 +129,12 @@ export interface Environment {
   environmentAlias: string;
   description: string | null;
 }
+
+export interface ApiKeyDetails {
+  apiKeyAlias: string;
+  description: string | null;
+  projectAlias: string;
+  validUntil: string;
+  environmentAliases: string[];
+  scopes: string[];
+}

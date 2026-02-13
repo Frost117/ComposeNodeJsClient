@@ -1,8 +1,11 @@
 import { getAccessToken } from "../auth.js";
 import { buildEnvironmentsUrl } from "../helpers/urls.js";
 import { Environment } from "../../../schema/types.js";
+import { askEnvironmentAlias, askEnvironmentDescription } from "../../../prompts.js";
 
-export async function createEnvironment(alias: string, description?: string): Promise<boolean> {
+export async function createEnvironment(): Promise<boolean> {
+  const alias = await askEnvironmentAlias();
+  const description = await askEnvironmentDescription();
 
   const accessToken = await getAccessToken();
   if (!accessToken) {

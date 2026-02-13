@@ -1,15 +1,7 @@
 import { getAccessToken } from "../auth.js";
 import { buildApiKeyUrl } from "../helpers/urls.js";
+import { ApiKeyDetails } from "../../../schema/types.js";
 import config from "../../../config.js";
-
-interface ApiKeyDetails {
-  apiKeyAlias: string;
-  description: string | null;
-  projectAlias: string;
-  validUntil: string;
-  environmentAliases: string[];
-  scopes: string[];
-}
 
 export async function getApiKeyDetails(): Promise<void> {
   const accessToken = await getAccessToken();

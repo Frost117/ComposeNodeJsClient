@@ -1,31 +1,16 @@
-import {
-  MenuAction,
-  showMainMenu,
-  confirmContinue,
-  askEnvironmentAlias,
-  askEnvironmentDescription,
-  askCollectionAlias,
-  askCollectionDescription,
-} from './prompts.js';
+import { MenuAction, showMainMenu, confirmContinue } from './prompts.js';
 import { fetchShows } from './apis/tvmaze/fetchShows.js';
-import { sendToCompose } from './apis/compose/ingestion/send.js';
 import { fetchAndSend } from './apis/fetchAndSend.js';
-import { createCollection } from './apis/compose/collection/create.js';
-import { createEnvironment } from './apis/compose/environment/create.js';
-import { getEnvironments, printEnvironments } from './apis/compose/environment/get.js';
-import { createTypeSchema } from './apis/compose/type-schema/create.js';
-
-async function handleCreateCollection(): Promise<void> {
-  const collectionAlias = await askCollectionAlias();
-  const description = await askCollectionDescription();
-  await createCollection(collectionAlias, description);
-}
-async function handleCreateEnvironment(): Promise<void> {
-  const environmentAlias = await askEnvironmentAlias();
-  const description = await askEnvironmentDescription();
-  await createEnvironment(environmentAlias, description);
-}
-
+import {
+  createCollection,
+  deleteCollection,
+  createEnvironment,
+  getEnvironments,
+  deleteEnvironment,
+  printEnvironments,
+  sendToCompose,
+  createTypeSchema,
+} from './apis/compose/index.js';
 
 async function main(): Promise<void> {
   console.log('Data Import Tool\n');
@@ -45,16 +30,22 @@ async function main(): Promise<void> {
         await fetchAndSend();
         break;
       case 'create_collection':
-        await handleCreateCollection();
+        await createCollection();
+        break;
+      case 'delete_collection':
+        await deleteCollection();
         break;
       case 'create_environment':
-        await handleCreateEnvironment();
+        await createEnvironment();
         break;
       case 'get_environments': {
         const environments = await getEnvironments();
         printEnvironments(environments);
         break;
       }
+      case 'delete_environment':
+        await deleteEnvironment();
+        break;
       case 'create_type_schema':
         await createTypeSchema();
         break;

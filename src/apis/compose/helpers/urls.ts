@@ -23,8 +23,9 @@ export function buildAuthUrl(): string {
   return `${baseManagementUrl}/v1/auth/token`;
 }
 
-export function buildCollectionsUrl(): string {
-  return `${baseManagementUrl}/v1/projects/${projectAlias}/environments/${environmentAlias}/collections`;
+export function buildCollectionsUrl(envAlias?: string): string {
+  const env = envAlias ?? environmentAlias;
+  return `${baseManagementUrl}/v1/projects/${projectAlias}/environments/${env}/collections`;
 }
 
 export function buildEnvironmentsUrl(): string {

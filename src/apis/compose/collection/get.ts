@@ -2,14 +2,14 @@ import { getAccessToken } from "../auth.js";
 import { buildCollectionsUrl, buildEnvironmentsUrl } from "../helpers/urls.js";
 import { Collection } from "../../../schema/types.js";
 
-export async function getCollections(): Promise<Collection[]> {
+export async function getCollections(envAlias?: string): Promise<Collection[]> {
   const accessToken = await getAccessToken();
   if (!accessToken) {
     console.error('Failed to obtain access token');
     return [];
   }
 
-  const url = buildCollectionsUrl();
+  const url = buildCollectionsUrl(envAlias);
 
   try {
     const response = await fetch(url, {
