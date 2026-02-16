@@ -3,6 +3,7 @@ import { fetchShows } from './apis/tvmaze/fetchShows.js';
 import { fetchAndSend } from './apis/fetchAndSend.js';
 import {
   createCollection,
+  listCollections,
   deleteCollection,
   createEnvironment,
   getEnvironments,
@@ -31,6 +32,9 @@ async function main(): Promise<void> {
         break;
       case 'create_collection':
         await createCollection();
+        break;
+      case 'get_collections':
+        await listCollections();
         break;
       case 'delete_collection':
         await deleteCollection();

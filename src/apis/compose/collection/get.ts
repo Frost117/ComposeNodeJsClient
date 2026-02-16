@@ -1,6 +1,8 @@
 import { getAccessToken } from "../auth.js";
-import { buildCollectionsUrl, buildEnvironmentsUrl } from "../helpers/urls.js";
+import { getEnvironments } from "../environment/get.js";
+import { buildCollectionsUrl } from "../helpers/urls.js";
 import { Collection } from "../../../schema/types.js";
+import { askSelectEnvironment } from "../../../prompts.js";
 
 export async function getCollections(envAlias?: string): Promise<Collection[]> {
   const accessToken = await getAccessToken();
@@ -35,6 +37,18 @@ export async function getCollections(envAlias?: string): Promise<Collection[]> {
     console.error(`Error fetching collections: ${error}`);
     return [];
   }
+}
+
+export async function listCollections(): Promise<void> {
+  const environments = await getEnvironments();
+  if (environments.length === 0) {
+    console.error('No environments available.');
+    return;
+  }
+
+  const selectedEnv = await askSelectEnvironment(environments);
+  const collections = await getCollections(selectedEnv);
+  printCollections(collections);
 }
 
 export function printCollections(collections: Collection[]): void {

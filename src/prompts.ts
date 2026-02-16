@@ -1,7 +1,7 @@
 import { select, confirm, number, input } from '@inquirer/prompts';
 import { Collection, Environment } from './schema/types.js';
 
-export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'delete_collection' | 'create_environment' | 'get_environments' | 'delete_environment' | 'create_type_schema' | 'exit';
+export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'get_collections' | 'delete_collection' | 'create_environment' | 'get_environments' | 'delete_environment' | 'create_type_schema' | 'exit';
 
 export async function showMainMenu(): Promise<MenuAction> {
   console.clear();
@@ -15,6 +15,7 @@ export async function showMainMenu(): Promise<MenuAction> {
       { name: 'Get all environments', value: 'get_environments' as const },
       { name: 'Delete an environment', value: 'delete_environment' as const },
       { name: 'Create a collection', value: 'create_collection' as const },
+      { name: 'Get all collections', value: 'get_collections' as const },
       { name: 'Delete a collection', value: 'delete_collection' as const },
       { name: 'Create type schema', value: 'create_type_schema' as const },
       { name: 'Exit', value: 'exit' as const },

@@ -1,7 +1,7 @@
 // Collection
 export { createCollection } from './collection/create.js';
 export { deleteCollection } from './collection/delete.js';
-export { getCollections, printCollections } from './collection/get.js';
+export { getCollections, listCollections, printCollections } from './collection/get.js';
 
 // Environment
 export { createEnvironment } from './environment/create.js';
