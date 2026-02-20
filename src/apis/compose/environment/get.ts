@@ -37,7 +37,9 @@ export async function getEnvironments(): Promise<Environment[]> {
   }
 }
 
-export function printEnvironments(environments: Environment[]): void {
+export async function listEnvironments(): Promise<void> {
+  const environments = await getEnvironments();
+
   if (environments.length === 0) {
     console.log('No environments found.');
     return;

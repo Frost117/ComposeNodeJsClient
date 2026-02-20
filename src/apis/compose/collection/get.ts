@@ -2,7 +2,7 @@ import { getAccessToken } from "../auth.js";
 import { getEnvironments } from "../environment/get.js";
 import { buildCollectionsUrl } from "../helpers/urls.js";
 import { Collection } from "../../../schema/types.js";
-import { askSelectEnvironment } from "../../../prompts.js";
+import { askSelectEnvironment, askSelectCollection, selection } from "../../../prompts.js";
 
 export async function getCollections(envAlias?: string): Promise<Collection[]> {
   const accessToken = await getAccessToken();
@@ -39,6 +39,20 @@ export async function getCollections(envAlias?: string): Promise<Collection[]> {
   }
 }
 
+export async function selectCollection(): Promise<void> {
+  let envAlias = selection.environment;
+
+  if (!envAlias) {
+    const envs = await getEnvironments();
+    if (envs.length === 0) return console.error('No environments available.');
+    envAlias = await askSelectEnvironment(envs);
+  }
+
+  const colls = await getCollections(envAlias);
+  if (colls.length === 0) return console.error('No collections available.');
+  await askSelectCollection(colls);
+}
+
 export async function listCollections(): Promise<void> {
   const environments = await getEnvironments();
   if (environments.length === 0) {
@@ -48,10 +62,7 @@ export async function listCollections(): Promise<void> {
 
   const selectedEnv = await askSelectEnvironment(environments);
   const collections = await getCollections(selectedEnv);
-  printCollections(collections);
-}
 
-export function printCollections(collections: Collection[]): void {
   if (collections.length === 0) {
     console.log('No collections found.');
     return;
