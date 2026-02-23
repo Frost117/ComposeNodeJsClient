@@ -63,8 +63,8 @@ The CLI presents an interactive menu with the following operations:
 | `COMPOSE_INGESTION_URL` | Compose ingestion endpoint base URL |
 | `COMPOSE_MANAGEMENT_URL` | Compose management API URL |
 | `COMPOSE_PROJECT_ALIAS` | Your Compose project alias |
-| `COMPOSE_ENVIRONMENT_ALIAS` | Default environment alias |
-| `COMPOSE_COLLECTION_ALIAS` | Default collection alias |
+| `COMPOSE_ENVIRONMENT_ALIAS` | Will be used as your default environment to fallback to |
+| `COMPOSE_COLLECTION_ALIAS` | Will be used as your default collection to fallback to |
 | `COMPOSE_CLIENT_ID` | OAuth2 client ID |
 | `COMPOSE_CLIENT_SECRET` | OAuth2 client secret |
 | `COMPOSE_API_KEY_ALIAS` | API key alias |
