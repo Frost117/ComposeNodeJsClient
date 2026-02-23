@@ -2,7 +2,8 @@ import { getAccessToken } from "../auth.js";
 import { getEnvironments } from "../environment/get.js";
 import { buildCollectionsUrl } from "../helpers/urls.js";
 import { Collection } from "../../../schema/types.js";
-import { askSelectEnvironment, askSelectCollection, selection } from "../../../prompts.js";
+import { askSelectEnvironment, askSelectCollection } from "../../../prompts.js";
+import { selection } from "../../../state.js";
 
 export async function getCollections(envAlias?: string): Promise<Collection[]> {
   const accessToken = await getAccessToken();
@@ -29,7 +30,13 @@ export async function getCollections(envAlias?: string): Promise<Collection[]> {
     }
 
     const data = await response.json();
-    return data.edges.map((edge: { node: { collectionAlias: string; description: string | null } }): Collection => ({
+    return data.edges.map((
+      edge: { 
+        node: { 
+          collectionAlias: string; 
+          description: string | null 
+        } 
+      }): Collection => ({
       collectionAlias: edge.node.collectionAlias,
       description: edge.node.description,
     }));

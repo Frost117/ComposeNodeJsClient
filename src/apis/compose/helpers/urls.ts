@@ -1,10 +1,10 @@
 import config from "../../../config.js";
 
-var baseManagementUrl = config.COMPOSE_MANAGEMENT_URL;
-var baseComposeUrl = config.COMPOSE_INGESTION_URL;
-var projectAlias = config.COMPOSE_PROJECT_ALIAS;
-var environmentAlias = config.COMPOSE_ENVIRONMENT_ALIAS;
-var collectionAlias = config.COMPOSE_COLLECTION_ALIAS;
+const baseManagementUrl = config.COMPOSE_MANAGEMENT_URL;
+const baseComposeUrl = config.COMPOSE_INGESTION_URL;
+const projectAlias = config.COMPOSE_PROJECT_ALIAS;
+const environmentAlias = config.COMPOSE_ENVIRONMENT_ALIAS;
+const collectionAlias = config.COMPOSE_COLLECTION_ALIAS;
 
 // Ingestion API: PUT /v1/{projectAlias}/{environmentAlias}/{collectionAlias}
 export function buildImportUrl(envAlias?: string, collAlias?: string): string {
@@ -28,8 +28,16 @@ export function buildCollectionsUrl(envAlias?: string): string {
   return `${baseManagementUrl}/v1/projects/${projectAlias}/environments/${env}/collections`;
 }
 
+export function buildCollectionUrl(collAlias: string, envAlias?: string): string {
+  return `${buildCollectionsUrl(envAlias)}/${collAlias}`;
+}
+
 export function buildEnvironmentsUrl(): string {
   return `${baseManagementUrl}/v1/projects/${projectAlias}/environments`;
+}
+
+export function buildEnvironmentUrl(envAlias: string): string {
+  return `${buildEnvironmentsUrl()}/${envAlias}`;
 }
 
 export function buildTypeSchemasUrl(): string {

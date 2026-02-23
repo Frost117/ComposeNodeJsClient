@@ -1,5 +1,5 @@
 import { getAccessToken } from '../auth.js';
-import { buildCollectionsUrl } from '../helpers/urls.js';
+import { buildCollectionUrl } from '../helpers/urls.js';
 import { getEnvironments } from '../environment/get.js';
 import { getCollections } from './get.js';
 import { askSelectEnvironment, askSelectCollection, confirmDelete } from '../../../prompts.js';
@@ -34,7 +34,7 @@ export async function deleteCollection(): Promise<boolean> {
     return false;
   }
 
-  const url = `${buildCollectionsUrl(selectedEnv)}/${selectedColl}`;
+  const url = buildCollectionUrl(selectedColl, selectedEnv);
 
   console.log(`Deleting collection "${selectedColl}" from "${selectedEnv}"...`);
 

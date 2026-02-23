@@ -1,6 +1,7 @@
 import { getAccessToken } from "../auth.js";
 import { buildEnvironmentsUrl } from "../helpers/urls.js";
 import { Environment } from "../../../schema/types.js";
+import { askSelectEnvironment } from "../../../prompts.js";
 
 export async function getEnvironments(): Promise<Environment[]> {
   const accessToken = await getAccessToken();
@@ -35,6 +36,12 @@ export async function getEnvironments(): Promise<Environment[]> {
     console.error(`Error fetching environments: ${error}`);
     return [];
   }
+}
+
+export async function selectEnvironment(): Promise<void> {
+  const envs = await getEnvironments();
+  if (envs.length === 0) return console.error('No environments available.');
+  await askSelectEnvironment(envs);
 }
 
 export async function listEnvironments(): Promise<void> {

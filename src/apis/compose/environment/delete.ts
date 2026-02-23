@@ -1,6 +1,6 @@
 import { getAccessToken } from '../auth.js';
 import { getEnvironments } from '../index.js';
-import { buildEnvironmentsUrl } from '../helpers/urls.js';
+import { buildEnvironmentUrl } from '../helpers/urls.js';
 import { askSelectEnvironment, confirmDelete } from '../../../prompts.js';
 
 export async function deleteEnvironment(): Promise<boolean> {
@@ -24,7 +24,7 @@ export async function deleteEnvironment(): Promise<boolean> {
         return false;
     }
 
-    const url = `${buildEnvironmentsUrl()}/${selectedEnv}`;
+    const url = buildEnvironmentUrl(selectedEnv);
 
     console.log(`Deleting environment "${selectedEnv}"...`);
 

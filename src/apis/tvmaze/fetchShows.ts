@@ -1,10 +1,9 @@
 import { Show } from '../../schema/types.js';
-import { askPageCount, selection } from '../../prompts.js';
+import { askPageCount } from '../../prompts.js';
+import { selection, setFetchedData } from '../../state.js';
 import config from '../../config.js';
 
-export let fetchedData: Show[] | null = null;
-
-export async function fetchShows(): Promise<Show[] | null> {
+export async function fetchShows(): Promise<Show[]> {
   const pages = await askPageCount();
   const allShows: Show[] = [];
 
@@ -23,7 +22,7 @@ export async function fetchShows(): Promise<Show[] | null> {
           break;
         }
         console.error(`Failed to fetch page ${page}: ${response.statusText}`);
-        return null;
+        return [];
       }
 
       const data: Show[] = await response.json();
@@ -31,11 +30,11 @@ export async function fetchShows(): Promise<Show[] | null> {
       console.log(`Page ${page}: fetched ${data.length} shows`);
     } catch (error) {
       console.error(`Error fetching page ${page}: ${error}`);
-      return null;
+      return [];
     }
   }
 
-  fetchedData = allShows;
+  setFetchedData(allShows);
   selection.pages = pages;
   console.log(`Total: ${allShows.length} shows from ${pages} page(s)`);
   return allShows;

@@ -1,5 +1,5 @@
 import { Show, ComposeUpsertEntry, ComposePayload } from '../../../schema/types.js';
-import { fetchedData } from '../../tvmaze/fetchShows.js';
+import { fetchedData } from '../../../state.js';
 import { buildImportUrl } from '../helpers/urls.js';
 import { getEnvironments } from '../environment/get.js';
 import { getCollections } from '../collection/get.js';
@@ -15,26 +15,27 @@ function transformToComposePayload(shows: Show[]): ComposePayload<Show> {
   }));
 }
 
-export async function sendToCompose(): Promise<void> {
-  if (!fetchedData || fetchedData.length === 0) {
+export async function sendToCompose(): Promise<boolean> {
+  if (fetchedData.length === 0) {
     console.error('No data to import. Please fetch data first.');
-    return;
+    return false;
   }
 
   const environments = await getEnvironments();
   if (environments.length === 0) {
     console.error('No environments available.');
-    return;
-  }
-
-  const collections = await getCollections();
-  if (collections.length === 0) {
-    console.error('No collections available.');
-    return;
+    return false;
   }
 
   const selectedEnv = await askSelectEnvironment(environments);
-  const selectedColl = await askSelectCollection(collections)
+
+  const collections = await getCollections(selectedEnv);
+  if (collections.length === 0) {
+    console.error('No collections available.');
+    return false;
+  }
+
+  const selectedColl = await askSelectCollection(collections);
 
   const url = buildImportUrl(selectedEnv, selectedColl);
   const payload = transformToComposePayload(fetchedData);
@@ -56,13 +57,15 @@ export async function sendToCompose(): Promise<void> {
       const errorBody = await response.text();
       console.error(`Failed to import data: ${response.status} ${response.statusText}`);
       console.error(`Response body: ${errorBody}`);
-      return;
+      return false;
     }
 
     const responseBody = await response.text();
     console.log(`Successfully imported ${payload.length} shows to "${selectedEnv}"`);
     console.log(`Response: ${responseBody}`);
+    return true;
   } catch (error) {
     console.error(`Error importing data: ${error}`);
+    return false;
   }
 }

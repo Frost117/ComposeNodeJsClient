@@ -6,7 +6,7 @@ export { getCollections, selectCollection, listCollections } from './collection/
 // Environment
 export { createEnvironment } from './environment/create.js';
 export { deleteEnvironment } from './environment/delete.js';
-export { getEnvironments, listEnvironments } from './environment/get.js';
+export { getEnvironments, selectEnvironment, listEnvironments } from './environment/get.js';
 
 // Ingestion
 export { sendToCompose } from './ingestion/send.js';

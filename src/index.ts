@@ -1,4 +1,4 @@
-import { MenuAction, showMainMenu, confirmContinue, askSelectEnvironment } from './prompts.js';
+import { MenuAction, showMainMenu, confirmContinue } from './prompts.js';
 import { fetchShows } from './apis/tvmaze/fetchShows.js';
 import { fetchAndSend } from './apis/fetchAndSend.js';
 import {
@@ -7,7 +7,7 @@ import {
   listCollections,
   deleteCollection,
   createEnvironment,
-  getEnvironments,
+  selectEnvironment,
   deleteEnvironment,
   listEnvironments,
   sendToCompose,
@@ -43,15 +43,9 @@ async function main(): Promise<void> {
       case 'delete_collection':
         await deleteCollection();
         break;
-      case 'select_environment': {
-        const envs = await getEnvironments();
-        if (envs.length > 0) {
-          await askSelectEnvironment(envs);
-        } else {
-          console.error('No environments available.');
-        }
+      case 'select_environment':
+        await selectEnvironment();
         break;
-      }
       case 'create_environment':
         await createEnvironment();
         break;

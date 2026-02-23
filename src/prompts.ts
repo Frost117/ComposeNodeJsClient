@@ -1,14 +1,9 @@
 import { select, confirm, text, isCancel, intro, outro, log, note } from '@clack/prompts';
 import pc from 'picocolors';
 import { Collection, Environment } from './schema/types.js';
+import { selection } from './state.js';
 
 export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'get_collections' | 'select_collection' | 'delete_collection' | 'create_environment' | 'get_environments' | 'select_environment' | 'delete_environment' | 'create_type_schema' | 'exit';
-
-export const selection = {
-  environment: null as string | null,
-  collection: null as string | null,
-  pages: null as number | null,
-};
 
 function handleCancel(value: unknown): never {
   if (isCancel(value)) {
