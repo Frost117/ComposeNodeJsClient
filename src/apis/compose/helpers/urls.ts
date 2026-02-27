@@ -2,6 +2,7 @@ import config from "../../../config.js";
 
 const baseManagementUrl = config.COMPOSE_MANAGEMENT_URL;
 const baseComposeUrl = config.COMPOSE_INGESTION_URL;
+const baseGraphqlUrl = config.COMPOSE_GRAPHQL_URL;
 const projectAlias = config.COMPOSE_PROJECT_ALIAS;
 const environmentAlias = config.COMPOSE_ENVIRONMENT_ALIAS;
 const collectionAlias = config.COMPOSE_COLLECTION_ALIAS;
@@ -46,4 +47,10 @@ export function buildTypeSchemasUrl(): string {
 
 export function buildApiKeyUrl(apiKeyAlias: string): string {
   return `${baseManagementUrl}/v1/me/api-keys/${apiKeyAlias}`;
+}
+
+// GraphQL API: POST /{projectAlias}/{environmentAlias}
+export function buildGraphqlUrl(envAlias?: string): string {
+  const env = envAlias ?? environmentAlias;
+  return `${baseGraphqlUrl}/${projectAlias}/${env}`;
 }
