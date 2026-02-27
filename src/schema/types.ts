@@ -138,3 +138,45 @@ export interface ApiKeyDetails {
   environmentAliases: string[];
   scopes: string[];
 }
+
+// GraphQL introspection types
+export interface GraphqlQueryTypeResponse {
+  data: {
+    __schema: {
+      queryType: {
+        fields: Array<{
+          name: string;
+          args: Array<{ name: string; type: { name: string | null } }>;
+        }>;
+      };
+    };
+  };
+}
+
+export interface GraphqlTypeDetailResponse {
+  data: {
+    filterType?: {
+      inputFields: Array<{
+        name: string;
+        type: { name: string | null; kind: string; ofType?: { name: string | null; kind: string } };
+      }>;
+    };
+    returnType?: {
+      fields: Array<{
+        name: string;
+        type: { name: string | null; kind: string; ofType?: { name: string | null; kind: string } };
+      }>;
+    };
+  };
+}
+
+export interface FilterField {
+  name: string;
+  type: string;
+}
+
+export interface CollectionSchema {
+  filterFields: FilterField[];
+  typeName: string;
+  returnFields: string[];
+}

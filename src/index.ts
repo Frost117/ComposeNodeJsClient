@@ -12,6 +12,7 @@ import {
   listEnvironments,
   sendToCompose,
   createTypeSchema,
+  queryCollection,
 } from './apis/compose/index.js';
 
 async function main(): Promise<void> {
@@ -57,6 +58,9 @@ async function main(): Promise<void> {
         break;
       case 'create_type_schema':
         await createTypeSchema();
+        break;
+      case 'query_collection':
+        await queryCollection();
         break;
       case 'exit':
         running = false;

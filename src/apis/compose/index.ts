@@ -13,3 +13,6 @@ export { sendToCompose } from './ingestion/send.js';
 
 // Type Schema
 export { createTypeSchema } from './type-schema/create.js';
+
+// GraphQL
+export { queryCollection } from './graphql/post.js';

@@ -3,7 +3,7 @@ import pc from 'picocolors';
 import { Collection, Environment } from './schema/types.js';
 import { selection } from './state.js';
 
-export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'get_collections' | 'select_collection' | 'delete_collection' | 'create_environment' | 'get_environments' | 'select_environment' | 'delete_environment' | 'create_type_schema' | 'exit';
+export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'get_collections' | 'select_collection' | 'delete_collection' | 'create_environment' | 'get_environments' | 'select_environment' | 'delete_environment' | 'create_type_schema' | 'query_collection' | 'exit';
 
 function handleCancel(value: unknown): never {
   if (isCancel(value)) {
@@ -58,6 +58,9 @@ export async function showMainMenu(): Promise<MenuAction> {
 
       { value: '_schema' as MenuAction, label: pc.bold(pc.cyan('── Schema ──')), disabled: true },
       { value: 'create_type_schema' as const, label: 'Create type schema' },
+
+      { value: '_graphql' as MenuAction, label: pc.bold(pc.cyan('── GraphQL ──')), disabled: true },
+      { value: 'query_collection' as const, label: 'Query collection' },
 
       { value: '_exit' as MenuAction, label: pc.dim('─────────'), disabled: true },
       { value: 'exit' as const, label: pc.red('Exit') },
@@ -163,6 +166,23 @@ export async function askSelectCollection(collections: Collection[]): Promise<st
   return value;
 }
 
+export async function askGraphqlFilter(): Promise<string> {
+  const result = await text({
+    message: 'Enter filter (e.g. status: "Running") or leave empty for all:',
+  });
+
+  return ensureValue(result);
+}
+
+export async function confirmRunAnotherQuery(): Promise<boolean> {
+  const result = await confirm({
+    message: 'Run another query?',
+    initialValue: true,
+  });
+
+  return ensureValue(result);
+}
+
 export async function confirmContinue(): Promise<boolean> {
   const result = await confirm({
     message: 'Return to main menu?',
@@ -191,4 +211,4 @@ export async function confirmFetch(showCount: number): Promise<boolean> {
   return ensureValue(result);
 }
 
-export { intro, outro, log };
+export { intro, outro, log, note };
