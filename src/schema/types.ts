@@ -173,10 +173,12 @@ export interface GraphqlTypeDetailResponse {
 export interface FilterField {
   name: string;
   type: string;
+  kind?: string;
 }
 
 export interface CollectionSchema {
   filterFields: FilterField[];
+  nestedFilterFields: Record<string, FilterField[]>;
   typeName: string;
   returnFields: string[];
 }

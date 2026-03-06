@@ -1,6 +1,7 @@
-import { select, confirm, text, isCancel, intro, outro, log, note } from '@clack/prompts';
+import { select, confirm, text, multiselect, isCancel, intro, outro, log, note } from '@clack/prompts';
 import pc from 'picocolors';
 import { Collection, Environment } from './schema/types.js';
+import { GENRES } from './schema/genres.js';
 import { selection } from './state.js';
 
 export type MenuAction = 'fetch' | 'send' | 'fetch_and_send' | 'create_collection' | 'get_collections' | 'select_collection' | 'delete_collection' | 'create_environment' | 'get_environments' | 'select_environment' | 'delete_environment' | 'create_type_schema' | 'query_collection' | 'exit';
@@ -166,13 +167,17 @@ export async function askSelectCollection(collections: Collection[]): Promise<st
   return value;
 }
 
-export async function askGraphqlFilter(): Promise<string> {
-  const result = await text({
-    message: 'Enter filter (e.g. status: "Running") or leave empty for all:',
+export async function askSelectGenres(): Promise<string[]> {
+  const result = await multiselect({
+    message: 'Filter by genres (space to select, enter to confirm, or enter with none selected to skip):',
+    options: GENRES.map((g) => ({ value: g as string, label: g })),
+    required: false,
   });
 
-  return ensureValue(result);
+  if (isCancel(result)) handleCancel(result);
+  return result as string[];
 }
+
 
 export async function confirmRunAnotherQuery(): Promise<boolean> {
   const result = await confirm({

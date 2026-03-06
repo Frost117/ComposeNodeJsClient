@@ -67,7 +67,7 @@ async function main(): Promise<void> {
         break;
     }
 
-    if (running) {
+    if (running && action !== 'query_collection') {
       running = await confirmContinue();
     }
   }
